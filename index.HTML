@@ -217,19 +217,32 @@
 </form>
   </div>
 </body>
-<script>
-  let url='https://script.google.com/macros/s/AKfycbwe1GshtW-HHv6hte6sW_jCSr5p7yhxT8TxwI-aiP_gSqNuJhyibUgwbIoYU2F6eZ17ng/exec'
-  let form=document.querySelection('#form');
-  form.addEventListener("submit",(e)=>)
-  e.target.btn.innerHTML="Submitting......";
-  let d=new FormData(form);
-  fetch(url,{
-    method:"POST"
-    body:d
-  }).then((res)=>res.text())
-  .then((finalRes)=>{
-     e.target.btn.innerHTML="Submit";
-     console.log(finalRes)
-  })
-</script>
+
+  <script>
+   let url='https://script.google.com/macros/s/AKfycbwe1GshtW-HHv6hte6sW_jCSr5p7yhxT8TxwI-aiP_gSqNuJhyibUgwbIoYU2F6eZ17ng/exec'
+
+    document.getElementById('form').addEventListener("submit", function (e) {
+      e.preventDefault();
+      document.getElementById('submitBtn').innerHTML = "Submitting...";
+      let formData = new FormData(this);
+
+      fetch(url, {
+        method: "POST",
+        body: formData
+      }).then((res) => res.text())
+        .then((finalRes) => {
+          document.getElementById('submitBtn').innerHTML = "Submit";
+          console.log(finalRes);
+          // Display a confirmation message or handle as needed
+        })
+        .catch((error) => {
+          console.error("Error submitting form:", error);
+          // Handle the error and provide feedback to the user
+        });
+    });
+
+    function resetForm() {
+      document.getElementById('form').reset();
+    }
+  </script>
 </html>
